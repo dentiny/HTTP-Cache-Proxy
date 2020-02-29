@@ -807,10 +807,7 @@ private:
 				{
 					throw ProxyException("Unknown HTTP request category");
 				}
-/*
-				// DEBUG
-				std::cout << "send and receive complete" << std::endl;
-*/
+
 				// release client and server fd
 				close(server_fd);
 				close(client_fd);
@@ -863,7 +860,6 @@ public:
 			int client_fd = acceptConnection(client_ip);
 			if(client_fd == -1) // request error
 			{
-//				std::cerr << "Accept client error" << std::endl;
 				continue;
 			}
 			std::thread thd(&Proxy::handleRequest, this, client_id, client_fd, client_ip);
