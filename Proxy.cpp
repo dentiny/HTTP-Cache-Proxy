@@ -132,16 +132,6 @@ private:
 	    }
 	    buffer[len] = '\0';
 
-/*
-	    // DEBUG
-	    std::cout << "request:" << std::endl;
-	    for(char c : buffer)
-	    {
-	    	std::cout << c << std::flush;
-	    }
-	    std::cout << "==================\n\n\n" << std::endl;
-*/
-
 	    // get current time for request
 	    time_t cur = time(NULL);
 	    tm * tm = localtime(&cur);
@@ -457,19 +447,6 @@ private:
 	    {
 	    	throw ProxyException("Proxy send to client error");
 	    }
-/*
-	    // DEBUG
-	    std::cout << "send header to client success" << std::endl;
-
-
-	    // DEBUG
-	    std::cout << "Received header:" << std::endl;
-	    for(int i = 0; i < len; ++i)
-	    {
-	    	std::cout << buffer[i] << std::flush;
-	    }
-	    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n\n" << std::endl;
-*/
 
 	    // get url of the request, and pass it as the argument of getResponse() body part
 	    const std::string url = request.url;
@@ -587,49 +564,7 @@ private:
 	    }
 	    Response response(url, segment, header);
 	    parser.parseResponse(response);
-/*
-	    // DEBUG
-	    std::cout << "total content:" << std::endl;
-	    for(const auto & segment : response.content)
-	    {
-	    	for(char c : segment)
-	    	{
-	    		std::cout << c;
-	    	}
-	    	std::cout << std::endl;
-	    }
-	    std::cout << "=================\n\n" << std::endl;
 
-	    // DEBUG
-	    std::cout << "status code=" << response.status_code << std::endl;
-	    std::cout << "first line=" << response.first_line << std::endl;
-	    std::cout << "url=" << response.url << std::endl;
-	    std::cout << "header=" << response.header << std::endl;
-	    std::cout << "kv=" << std::endl;
-	    for(const auto & p : response.kv)
-	    {
-	    	std::cout << p.first << " " << p.second << std::endl;
-	    }
-	    std::cout << "no-store=" << (response.no_store ? "true" : "false") << std::endl;
-	    std::cout << "no-cache=" << (response.no_cache ? "true" : "false") << std::endl;
-	    std::cout << "response time=" << std::endl;
-	    tm * tm1 = localtime(&response.cur_time);
-	    char * dt1 = asctime(tm1);
-	    std::string response_time(dt1);
-	    std::cout << response_time << std::endl;
-	    std::cout << "expiration time=" << std::endl;
-	    tm * tm2 = localtime(&response.expiration_time);
-	    char * dt2 = asctime(tm2);
-	    std::string expiration_time(dt2);
-	    std::cout << expiration_time << std::endl;
-	    std::cout << "last_modified=" << std::endl;
-	    tm * tm3 = localtime(&response.last_modified);
-	    char * dt3 = asctime(tm3);
-	    std::string last_modified_time(dt3);
-	    std::cout << last_modified_time << std::endl;
-	    std::cout << "etag=" << response.etag << std::endl;
-	    std::cout << "====================\n\n\n" << std::endl;
-*/
 	    // write first line of response to log
 	    std::string log_content = std::to_string(client_id) + ": Received " + response.first_line + " from " + response.url;
 	    logger.log(log_content);
@@ -835,9 +770,6 @@ private:
 				std::string log_content = std::to_string(client_id) + ": Requesting " + request.first_line + " from " + request.url;
 				logger.log(log_content);
 
-/*				// DEBUG
-				std::cout << "HTTP action is " << httpAction << std::endl;
-*/
 				if(httpAction == "CONNECT")
 				{
 					handleConnect(client_id, client_fd, server_fd, request);
