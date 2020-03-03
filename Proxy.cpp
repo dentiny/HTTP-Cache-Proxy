@@ -855,7 +855,7 @@ public:
 		// (1) wait until an request of sending arrives
 		// (2) every time a client fd is caught, create a new thread to handle the request
 		while(true)
-		{
+		{ 
 			std::string client_ip;
 			int client_fd = acceptConnection(client_ip);
 			if(client_fd == -1) // request error
